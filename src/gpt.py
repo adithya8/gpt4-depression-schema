@@ -44,7 +44,7 @@ class OpenAICommunicator:
     def make_openai_api_call(self, prompt):
         
         try:
-            if self.model_name in ['gpt-3.5', 'gpt-4']:
+            if self.model_name in ['gpt-3.5-turbo', 'gpt-4']:
                 response = openai.ChatCompletion.create(
                     model=self.model_name,
                     messages=prompt,
@@ -84,7 +84,7 @@ class OpenAICommunicator:
         choices = response["choices"]
         main_response = choices[0].message
         main_response_message, main_response_role = main_response["content"], main_response["role"]
-        # process "finish_reason" to check for "stop" or "length"
+        # TODO: process "finish_reason" to check for "stop" or "length"
         return main_response_message, response
 
     def run_inference(self, prompt):
@@ -95,7 +95,7 @@ class OpenAICommunicator:
             print(f"Using cached response")
             response_text = self.cached_responses[cache_key]['text']
         else:
-            print(f"Running {self.model_name}")
+            # print(f"Running {self.model_name}")
             response_text, response = self.make_openai_api_call(prompt)
             self.cached_responses[cache_key] = {'text': response_text, 'object': response}
             with open(self.cache_path, 'wb') as handle:
