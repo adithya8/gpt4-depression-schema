@@ -1,5 +1,6 @@
 import logging
 import os
+import time
 import pandas as pd
 from tqdm import tqdm
 
@@ -13,18 +14,18 @@ if __name__ == "__main__":
         raise ValueError("Experiment name {} not found in templates.\n Choices: {}".format(args.expt_name, list(templates.keys())))
             
     run_folder_path = args.save_folder_path
-    prompts_dir = os.path.join(run_folder_path, "expts/prompts")
+    # prompts_dir = os.path.join(run_folder_path, "expts/prompts")
     responses_dir = os.path.join(run_folder_path, "expts/responses")
     logs_dir = os.path.join(run_folder_path, "expts/logs")
     
     # makedir if not exists
     os.makedirs(run_folder_path, mode=700, exist_ok=True)
-    os.makedirs(prompts_dir, mode=770, exist_ok=True)
+    # os.makedirs(prompts_dir, mode=770, exist_ok=True)
     os.makedirs(responses_dir, mode=700, exist_ok=True)
     os.makedirs(logs_dir, mode=700, exist_ok=True)
     
-    
-    expt_metainfo = '.'.join([args.expt_name, args.openai_model_name])
+    prefix = 'demo_' if args.demo else 'expt_'
+    expt_metainfo = '.'.join([prefix+args.openai_model_name, args.expt_name])
     log_file_path = os.path.join(run_folder_path, "expts/logs/{}.log".format(expt_metainfo))
     logging.basicConfig(level=logging.INFO, filename=log_file_path, 
                     format='%(asctime)s %(levelname)s %(module)s - %(funcName)s: %(message)s',
@@ -52,28 +53,42 @@ if __name__ == "__main__":
     # load dataset
     data = pd.read_csv(args.data_path)
     if "dep" in args.expt_name:
-        df = data[['user_id', 'dep_text', 'phq_tot']]
-        df = df.rename(columns={'dep_text': 'input_text', 'phq_tot': 'target_value'})
+        df = data[['user_id', 'dep_text', 'phq_score']]
+        df = df.rename(columns={'dep_text': 'input_text', 'phq_score': 'target_value'})
     elif "anx" in args.expt_name:
-        df = data[['user_id', 'anx_text', 'gad_tot']]
-        df = df.rename(columns={'anx_text': 'input_text', 'gad_tot': 'target_value'})
+        df = data[['user_id', 'anx_text', 'gad_score']]
+        df = df.rename(columns={'anx_text': 'input_text', 'gad_score': 'target_value'})
     else:
         raise ValueError("Experiments supported are anx and dep")    
 
+    if args.demo:
+        df = df.head(5)
+
     user_ids, input_texts, target_values = df.iloc[:, 0].tolist(), df.iloc[:, 1].tolist(), df.iloc[:, 2].tolist()
+    logging.info("Loaded {} rows of data for Inference.".format(len(user_ids)))
     
+    query_response_time = []
+    start_time = time.time()
     output_list = []
     for idx in tqdm(range(len(user_ids)), desc="Running inference with {}".format(args.openai_model_name)):
         row_id, input_text, target_value = user_ids[idx], input_texts[idx], target_values[idx]
         
-        instruction_with_text = instruction.format(input_text)
+        instruction_with_text = instruction.format(text=input_text.strip())
         input_prompt = [
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": instruction_with_text}
         ]
+        query_start_time = time.time()
         response_text = openai_communicator.run_inference(input_prompt)
+        query_response_time.append(time.time() - query_start_time)
         output_json = {'user_id': row_id, 'input_text': input_prompt, 'target_value': target_value, 'response_text': response_text}
         output_list.append(output_json)
+    end_time = time.time()
+    
+    total_time = round(end_time - start_time, 2)
+    avg_response_time = round(sum(query_response_time)/len(query_response_time), 2)
+    logging.info("Total time taken for inference of {} rows: {}".format(len(user_ids), total_time))
+    logging.info("Average time taken for inference of {} rows: {}".format(len(user_ids), avg_response_time))
     
     output_df = pd.DataFrame(output_list)
     output_df.to_csv(responses_file_path, index=False)
