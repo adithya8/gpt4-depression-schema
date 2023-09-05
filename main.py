@@ -73,6 +73,9 @@ if __name__ == "__main__":
     for idx in tqdm(range(len(user_ids)), desc="Running inference with {}".format(args.openai_model_name)):
         row_id, input_text, target_value = user_ids[idx], input_texts[idx], target_values[idx]
         
+        if (pd.isna(input_text)) or (pd.isnull(input_text)):
+            continue
+        
         instruction_with_text = instruction.format(text=input_text.strip())
         input_prompt = [
             {"role": "system", "content": "You are a helpful assistant."},
@@ -87,8 +90,8 @@ if __name__ == "__main__":
     
     total_time = round(end_time - start_time, 2)
     avg_response_time = round(sum(query_response_time)/len(query_response_time), 2)
-    logging.info("Total time taken for inference of {} rows: {}".format(len(user_ids), total_time))
-    logging.info("Average time taken for inference of {} rows: {}".format(len(user_ids), avg_response_time))
+    logging.info("Total time taken for inference of {} rows: {}".format(len(output_json), total_time))
+    logging.info("Average time taken for inference of {} rows: {}".format(len(output_json), avg_response_time))
     
     output_df = pd.DataFrame(output_list)
     output_df.to_csv(responses_file_path, index=False)
