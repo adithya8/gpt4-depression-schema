@@ -84,7 +84,7 @@ if __name__ == "__main__":
         query_start_time = time.time()
         response_text = openai_communicator.run_inference(input_prompt)
         query_response_time.append(time.time() - query_start_time)
-        output_json = {'user_id': row_id, 'input_text': input_prompt, 'target_value': target_value, 'response_text': response_text}
+        output_json = {'user_id': row_id, 'input_text': input_prompt, 'target_value': target_value, 'response_text': response_text, 'user_text': input_text.strip()}
         output_list.append(output_json)
     end_time = time.time()
     
