@@ -1,0 +1,6 @@
+
+# Running the first experiment dep_list_evidence_classify_estimate with gpt-4 capped at 350 tokens
+bash run_main.sh dep_list_evidence_classify_estimate gpt-4 350 /chronos_data/avirinchipur/reasoning_for_psych/kjell_prolific/depTextOnly.csv
+
+# Running the second experiment dep_list_phq9items_score_classify with gpt-4 capped at 600 tokens
+bash run_main.sh dep_list_phq9items_score_classify gpt-4 600 /chronos_data/avirinchipur/reasoning_for_psych/kjell_prolific/depTextOnly.csv
