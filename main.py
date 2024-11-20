@@ -75,10 +75,9 @@ if __name__ == "__main__":
         
         if (pd.isna(input_text)) or (pd.isnull(input_text)):
             continue
-        
         instruction_with_text = instruction.format(text=input_text.strip())
         input_prompt = [
-            {"role": "system", "content": "You are a helpful assistant."},
+            # {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": instruction_with_text}
         ]
         query_start_time = time.time()

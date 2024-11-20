@@ -1,0 +1,10 @@
+item,correlation_inferred,n_inferred,correlation_explicit,n_explicit
+Feeling_depressed,0.742,65,0.709,890
+Lack_of_interest,0.559,599,0.704,356
+Feeling_bad_about_oneself,0.556,688,0.653,267
+Fatigue,0.548,792,0.486,162
+Trouble_falling_asleep_or_sleeping_too_much,0.494,851,0.503,65
+Difficulty_concentrating,0.464,731,0.389,224
+Poor_appetite_or_overeating,0.389,893,0.47,47
+Thoughts_of_death_or_suicide,0.264,867,0.62,88
+Moving_or_speaking_slowly_or_too_quickly,0.212,928,0.298,25

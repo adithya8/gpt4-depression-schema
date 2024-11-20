@@ -1,0 +1,10 @@
+,Anhedonia,Depressed_Mood,Insomnia_or_Hypersomnia,Fatigue,Poor_appetite_or_overeating,Worthlessness_or_Guilt,Difficulty_concentrating,Psychomotor_agitation_or_retardation,Suicidal_ideation
+Anhedonia,ns,ns,0.789,0.797,0.634,0.743,0.748,0.697,0.324
+Depressed_Mood,0.71,ns,0.695,0.763,0.567,0.701,0.676,0.603,0.341
+Insomnia_or_Hypersomnia,0.441,ns,ns,0.644,0.463,0.478,0.628,0.429,0.196
+Fatigue,0.541,ns,0.582,ns,0.437,0.53,0.576,0.555,0.192
+Poor_appetite_or_overeating,ns,ns,0.434,0.617,ns,0.414,0.478,0.46,0.4
+Worthlessness_or_Guilt,0.506,ns,0.667,0.654,0.578,ns,0.631,0.556,0.32
+Difficulty_concentrating,0.468,ns,0.622,0.57,0.373,0.483,ns,0.47,ns
+Psychomotor_agitation_or_retardation,0.554,ns,ns,ns,ns,ns,ns,ns,0.443
+Suicidal_ideation,0.551,ns,0.734,0.794,0.496,0.682,0.632,0.528,ns

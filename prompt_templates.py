@@ -41,6 +41,114 @@ Keep in mind, a score of 0 indicates that the symptom was not experienced, while
 
 Text: '{text}'
 
-"""
+""",
+
+    "dep_list_phq9items_score_classify2": """Your task is to conduct an in-depth analysis of a provided written text, with the goal of mirroring the psychological state of the author to accurately fill out the Patient Health Questionnaire (PHQ9). The PHQ9 consists of 9 items that are designed to identify symptoms of depression: Anhedonia (Little interest or pleasure in doing things), Depressed Mood (Feeling down, depressed, or hopeless), Insomnia or Hypersomnia (Trouble falling or staying asleep, or sleeping too much), Fatigue (Feeling tired or having little energy) , Poor appetite or overeating, Worthlessness or Guilt (Feeling bad about yourself or that you are a failure or have let yourself or your family down), Difficulty concentrating (Trouble concentrating on things) , Psychomotor agitation or retardation (Moving or speaking so slowly that other people could have noticed. Or the opposite being so fidgety or restless that you have been moving around a lot more than usual), and Suicidal ideation (Thoughts that you would be better off dead, or of hurting yourself). The text should be scrutinized carefully and the following steps should be strictly followed:
+
+STEP 1: Pinpoint and record only the PHQ9 items that are clearly stated in the text, assigning each a severity score between 0-3. At this stage, refrain from evaluating or recording items that are not explicitly mentioned. Enclose the text spans indicative of respective symptoms inside single quotes. If multiple spans are present, separate them using comma.
+STEP 2: For the remaining PHQ9 items not explicitly mentioned in the text, assign an estimated score. This estimation should be based on the what you would expect it to be while factoring the severity score of the symptoms already identified.
+STEP 3: Combine the scores from the previous steps and present the total PHQ9 score as "Combined Score: ".  Categorize this score into only one of the following: None, Mild, Moderate, Moderately Severe, and Severe, and present it as "Category: ". This will signify the completion of the task.
+
+To ensure clarity and easy readability, format your output into a nested JSON. The first level should contain the step number as key ('STEP #') and the value should be a JSON containing the items as keys and a list containing reason(s) and the estimated severity score as values. The final step's JSON should contain 'Final' as the key and list containing the summed score and the evaluated category as the value.
+Here's the abstracted format of the JSON, with elements inside the angle brackets being placeholders for the actual values:
+{{
+    'STEP 1': {{
+        '<Item a>': ['<Reason>', '<Severity Score a>'],
+        '<Item b>': ['<Reason>', '<Severity Score b>'],
+        ...
+    }},
+    'STEP 2': {{
+        '<Item x>': ['<Reason>', '<Severity Score x>'],
+        '<Item y>': ['<Reason>', '<Severity Score y>'],
+        ...
+    }},
+    'STEP 3': {{
+        'Final': ['Combined Score: <score>', 'Category: <category>']
+    }}
+}}
+
+Keep in mind, a score of 0 indicates that the symptom was not experienced, while a score of 3 signifies a high severity level of the specific symptom.
+
+
+Text: '{text}'
+
+""",
+
+    "dep_list_phq9items_score_classify3": """Your task is to conduct an in-depth analysis of an authored text, with the goal of accurately filling out the Patient Health Questionnaire (PHQ9) by understanding the psychological state of the author. The PHQ9 consists of 9 items that are designed to identify symptoms of depression: Anhedonia, Depressed Mood, Insomnia or Hypersomnia, Fatigue , Poor appetite or overeating, Worthlessness or Guilt, Difficulty concentrating , Psychomotor agitation or retardation, and Suicidal ideation. The text should be scrutinized carefully and the following steps should be strictly followed:
+
+STEP 1: Pinpoint and record only the PHQ9 items that are clearly stated in the text, assigning each a severity score between 0-3. At this stage, refrain from evaluating or recording items that are not explicitly mentioned. Enclose the text spans indicative of respective symptoms inside single quotes. If multiple spans are present, separate them using comma.
+STEP 2: For the remaining PHQ9 items not explicitly mentioned in the text, assign an estimated score. This estimation should be based on the what you would expect it to be while factoring the severity score of the symptoms already identified.
+STEP 3: Combine the scores from the previous steps and present the total PHQ9 score as "Combined Score: ".  Categorize this score into only one of the following: None, Mild, Moderate, Moderately Severe, and Severe, and present it as "Category: ". This will signify the completion of the task.
+
+To ensure clarity and easy readability, format your output into a nested JSON. The first level should contain the step number as key ('STEP #') and the value should be a JSON containing the items as keys and a list containing reason(s) and the estimated severity score as values. The final step's JSON should contain 'Final' as the key and list containing the combined score and the evaluated category as the value.
+Here's the abstracted format of the JSON, with elements inside the angle brackets being placeholders for the actual values:
+{{
+    'STEP 1': {{
+        '<Item a>': ['<Reason>', '<Severity Score a>'],
+        '<Item b>': ['<Reason>', '<Severity Score b>'],
+        ...
+    }},
+    'STEP 2': {{
+        '<Item x>': ['<Reason>', '<Severity Score x>'],
+        '<Item y>': ['<Reason>', '<Severity Score y>'],
+        ...
+    }},
+    'STEP 3': {{
+        'Final': ['Combined Score: <score>', 'Category: <category>']
+    }}
+}}
+
+Keep in mind, a score of 0 indicates that the symptom was not experienced, while a score of 3 signifies a high severity level of the specific symptom.
+
+
+Text: "{text}"
+
+""",
+    "dep_list_phq9items_score_classify2_paraphrased_instructions":"""Analyze the provided written text to assess the author's psychological state and complete the Patient Health Questionnaire (PHQ9) accordingly. The PHQ9 comprises 9 items aimed at identifying symptoms of depression:
+
+1. Anhedonia (Little interest or pleasure in doing things)
+2. Depressed Mood (Feeling down, depressed, or hopeless)
+3. Insomnia or Hypersomnia (Trouble falling or staying asleep, or sleeping too much)
+4. Fatigue (Feeling tired or having little energy)
+5. Poor appetite or overeating
+6. Worthlessness or Guilt (Feeling bad about yourself or that you are a failure or have let yourself or your family down)
+7. Difficulty concentrating (Trouble concentrating on things)
+8. Psychomotor agitation or retardation (Moving or speaking so slowly that other people could have noticed. Or the opposite being so fidgety or restless that you have been moving around a lot more than usual)
+9.Suicidal ideation (Thoughts that you would be better off dead, or of hurting yourself)
+
+Follow these steps:
+
+STEP 1: Pinpoint and record only the PHQ9 items that are clearly stated in the text, assigning each a severity score between 0-3. At this stage, refrain from evaluating or recording items that are not explicitly mentioned. Enclose the text spans indicative of respective symptoms inside single quotes. If multiple spans are present, separate them using comma.
+STEP 2: For the remaining PHQ9 items not explicitly mentioned in the text, assign an estimated score. This estimation should be based on the what you would expect it to be while factoring the severity score of the symptoms already identified.
+STEP 3: Combine the scores from the previous steps and present the total PHQ9 score as "Combined Score: ".  Categorize this score into only one of the following: None, Mild, Moderate, Moderately Severe, and Severe, and present it as "Category: ". This will signify the completion of the task.
+
+To ensure clarity and easy readability, format your output into a nested JSON. The first level should contain the step number as key ('STEP #') and the value should be a JSON containing the items as keys and a list containing reason(s) and the estimated severity score as values. The final step's JSON should contain 'Final' as the key and list containing the combined score and the evaluated category as the value.
+Here's the abstracted format of the JSON, with elements inside the angle brackets being placeholders for the actual values:
+{{
+    'STEP 1': {{
+        '<Item a>': ['<Reason>', '<Severity Score a>'],
+        '<Item b>': ['<Reason>', '<Severity Score b>'],
+        ...
+    }},
+    'STEP 2': {{
+        '<Item x>': ['<Reason>', '<Severity Score x>'],
+        '<Item y>': ['<Reason>', '<Severity Score y>'],
+        ...
+    }},
+    'STEP 3': {{
+        'Final': ['Combined Score: <score>', 'Category: <category>']
+    }}
+}}
+
+Keep in mind, a score of 0 indicates that the symptom was not experienced, while a score of 3 signifies a high severity level of the specific symptom.
+
+
+Text: "{text}"
+
+""",
+    "dep_list_phq9items_score_classify2_steps_merged":"""Your task is to conduct an in-depth analysis of a provided written text, with the goal of mirroring the psychological state of the author to accurately fill out the Patient Health Questionnaire (PHQ9). The PHQ9 consists of 9 items that are designed to identify symptoms of depression: Anhedonia (Little interest or pleasure in doing things), Depressed Mood (Feeling down, depressed, or hopeless), Insomnia or Hypersomnia (Trouble falling or staying asleep, or sleeping too much), Fatigue (Feeling tired or having little energy) , Poor appetite or overeating, Worthlessness or Guilt (Feeling bad about yourself or that you are a failure or have let yourself or your family down), Difficulty concentrating (Trouble concentrating on things) , Psychomotor agitation or retardation (Moving or speaking so slowly that other people could have noticed. Or the opposite being so fidgety or restless that you have been moving around a lot more than usual), and Suicidal ideation (Thoughts that you would be better off dead, or of hurting yourself). The text should be scrutinized carefully and the following steps should be strictly followed:
+
+STEP 1: 
+    """,
 
 }

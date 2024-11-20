@@ -44,7 +44,7 @@ class OpenAICommunicator:
     def make_openai_api_call(self, prompt):
         
         try:
-            if self.model_name in ['gpt-3.5-turbo', 'gpt-4']:
+            if self.model_name in ['gpt-3.5-turbo', 'gpt-4', 'gpt-4-1106-preview', 'gpt-4-0613']:
                 response = openai.ChatCompletion.create(
                     model=self.model_name,
                     messages=prompt,
@@ -71,6 +71,10 @@ class OpenAICommunicator:
             print("Service unavailable error hit")
             time.sleep(20)
             return self.make_openai_api_call(prompt)
+        # except openai.error.APIError: # Issue on their end, retry after 60 seconds
+        #     print ("API error hit")
+        #     time.sleep(60)
+        #     return self.make_openai_api_call(prompt)
         except openai.error.RateLimitError:
             print("Rate limit error hit")
             time.sleep(60)

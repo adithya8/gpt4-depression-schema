@@ -1,0 +1,55 @@
+Anhedonia_exp [0.52] Depressed_imp
+Anhedonia_exp [0.19] Sleep_imp
+Anhedonia_exp [0.17] Fatigue_imp
+Anhedonia_exp [0.14] Worthlessness_imp
+Anhedonia_exp [0.15] Concentration_imp
+Anhedonia_exp [0.14] Psychomotor_imp
+
+Depressed_exp [0.48] Anhedonia_imp
+Depressed_exp [0.26] Sleep_imp
+Depressed_exp [0.36] Fatigue_imp
+Depressed_exp [0.23] Appetite_imp
+Depressed_exp [0.37] Worthlessness_imp
+Depressed_exp [0.28] Concentration_imp
+Depressed_exp [0.23] Psychomotor_imp
+
+Sleep_exp [0.61] Depressed_imp
+Sleep_exp [0.17] Fatigue_imp
+Sleep_exp [0.19] Appetite_imp
+
+
+Appetite_exp [0.17] Suicidal_imp
+
+Worthlessness_exp [0.11] Sleep_imp
+Worthlessness_exp [0.16] Appetite_imp
+Worthlessness_exp [0.11] Suicidal_imp
+
+Concentration_exp [0.23] Anhedonia_imp
+Concentration_exp [0.47] Depressed_imp
+Concentration_exp [0.2] Fatigue_imp
+
+Psychomotor_exp [0.18] Suicidal_imp
+
+Suicidal_exp [0.16] Sleep_imp
+Suicidal_exp [0.16] Fatigue_imp
+Suicidal_exp [0.11] Worthlessness_imp
+
+
+:Anhedonia_exp #8fbdd4
+:Anhedonia_imp #8fbdd4
+:Depressed_exp #a3dac9
+:Depressed_imp #a3dac9
+:Sleep_exp #dbe68b
+:Sleep_imp #dbe68b
+:Fatigue_imp #cfcfcf
+:Fatigue_exp #cfcfcf
+:Appetite_exp #ffef95
+:Appetite_imp #ffef95
+:Worthlessness_exp #ffcb92
+:Worthlessness_imp #ffcb92
+:Concentration_exp #f8b198
+:Concentration_imp #f8b198
+:Psychomotor_exp #e8959e
+:Psychomotor_imp #e8959e
+:Suicidal_exp #d79ac7
+:Suicidal_imp #d79ac7
