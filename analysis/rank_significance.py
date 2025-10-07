@@ -1,3 +1,4 @@
+# Conda env path: /chronos_data/vvaradarajan/conda_envs/extremism
 import json
 from tqdm import tqdm
 import pickle
@@ -100,44 +101,66 @@ def rank_significance(data1, data2, user_ids, num_permutations=1000):
 if __name__ =='__main__':
     
     self_report_file = '/cronus_data/avirinchipur/reasoning_for_psych/expts/parsed_responses/self_report_unified.csv'
-    gpt4_file = '/cronus_data/avirinchipur/reasoning_for_psych/expts/parsed_responses/expt_gpt-4-1106-preview.dep_list_phq9items_score_classify2_editted_unified.csv'    
+    gpt4_file = '/cronus_data/avirinchipur/reasoning_for_psych/expts/parsed_responses/expt_gpt-4-1106-preview.dep_list_phq9items_score_classify2_editted_unified.csv'
+    gpt5_file = '/chronos_data/avirinchipur/reasoning_for_psych/expts/parsed_responses/expt_gpt-5.dep_list_phq9items_score_classify2.csv'
 
     gpt4_data = pd.read_csv(gpt4_file)
     self_data = pd.read_csv(self_report_file)
+    gpt5_data = pd.read_csv(gpt5_file)
     
     print ("Num rows in gpt4 data: ", gpt4_data.shape[0])
     print ("Num rows in self report data: ", self_data.shape[0])
+    print ("Num rows in gpt5 data", gpt5_data.shape[0])
     
     cols = ['user_id', 'score_Anhedonia', 'score_Depressed_Mood', 'score_Insomnia_or_Hypersomnia', 'score_Fatigue', \
         'score_Poor_appetite_or_overeating', 'score_Worthlessness_or_Guilt', 'score_Difficulty_concentrating', \
         'score_Psychomotor_agitation_or_retardation', 'score_Suicidal_ideation']
     
-    user_ids = set(gpt4_data.user_id.tolist()).intersection(set(self_data.user_id.tolist()))
-    gpt4_data = gpt4_data[gpt4_data.user_id.isin(user_ids)][cols].set_index('user_id')
+    ############################################## GPT 4 analysis #####################################################
+    # user_ids = set(gpt4_data.user_id.tolist()).intersection(set(self_data.user_id.tolist()))
+    # gpt4_data = gpt4_data[gpt4_data.user_id.isin(user_ids)][cols].set_index('user_id')
+    # self_data = self_data[self_data.user_id.isin(user_ids)][cols].set_index('user_id')
+    
+    # data1_symp_rank, data2_symp_rank = rank_significance(gpt4_data, self_data, list(user_ids), num_permutations=500)
+    # combined_data_symp_rank = {'gpt4': data1_symp_rank, 'self_report': data2_symp_rank}
+    
+    # with open('/cronus_data/avirinchipur/reasoning_for_psych/irt/gpt4_sr_fulldata_ranking.pkl', 'wb') as f:
+    #     pickle.dump(combined_data_symp_rank, f, pickle.HIGHEST_PROTOCOL)
+    
+    # with open('/cronus_data/avirinchipur/reasoning_for_psych/irt/gpt4_sr_fulldata_ranking.json', 'r') as f:
+    #     json.dump(combined_data_symp_rank, f, indent=4)
+
+    # #to r
+    # pandas2ri.activate()
+    # gpt4_sample = pandas2ri.py2rpy(gpt4_data)
+    # sr_sample = pandas2ri.py2rpy(self_data)
+    # pandas2ri.deactivate()
+    # gpt4_ranks, sr_ranks = rank_iteration(gpt4_sample, sr_sample)
+    # fulldata_ranks = {'gpt4': gpt4_ranks, 'self_report': sr_ranks, 'columns': cols[1:]}
+    
+    # pd.DataFrame(fulldata_ranks).to_csv('/cronus_data/avirinchipur/reasoning_for_psych/irt/gpt4_sr_fulldata_ranking.csv', 
+    #                                     index=False)
+
+    ############################################## GPT 5 analysis #####################################################
+    user_ids = set(gpt5_data.user_id.tolist()).intersection(set(self_data.user_id.tolist()))
+    gpt5_data = gpt5_data[gpt5_data.user_id.isin(user_ids)][cols].set_index('user_id')
     self_data = self_data[self_data.user_id.isin(user_ids)][cols].set_index('user_id')
     
-    data1_symp_rank, data2_symp_rank = rank_significance(gpt4_data, self_data, list(user_ids), num_permutations=500)
-    combined_data_symp_rank = {'gpt4': data1_symp_rank, 'self_report': data2_symp_rank}
+    data1_symp_rank, data2_symp_rank = rank_significance(gpt5_data, self_data, list(user_ids), num_permutations=500)
+    combined_data_symp_rank = {'gpt5': data1_symp_rank, 'self_report': data2_symp_rank}
     
-    with open('/cronus_data/avirinchipur/reasoning_for_psych/irt/gpt4_sr_fulldata_ranking.pkl', 'wb') as f:
+    with open('/cronus_data/avirinchipur/reasoning_for_psych/irt/gpt5_sr_fulldata_ranking.pkl', 'wb') as f:
         pickle.dump(combined_data_symp_rank, f, pickle.HIGHEST_PROTOCOL)
     
-    with open('/cronus_data/avirinchipur/reasoning_for_psych/irt/gpt4_sr_fulldata_ranking.json', 'r') as f:
-        json.dump(combined_data_symp_rank, f, indent=4)
+    # with open('/cronus_data/avirinchipur/reasoning_for_psych/irt/gpt5_sr_fulldata_ranking.json', 'r') as f:
+    #     json.dump(combined_data_symp_rank, f, indent=4)
 
     #to r
     pandas2ri.activate()
-    gpt4_sample = pandas2ri.py2rpy(gpt4_data)
+    gpt5_sample = pandas2ri.py2rpy(gpt5_data)
     sr_sample = pandas2ri.py2rpy(self_data)
     pandas2ri.deactivate()
-    gpt4_ranks, sr_ranks = rank_iteration(gpt4_sample, sr_sample)
-    fulldata_ranks = {'gpt4': gpt4_ranks, 'self_report': sr_ranks, 'columns': cols[1:]}
+    gpt5_ranks, sr_ranks = rank_iteration(gpt5_sample, sr_sample)
+    fulldata_ranks = {'gpt5': gpt5_ranks, 'self_report': sr_ranks, 'columns': cols[1:]}
     
-    pd.DataFrame(fulldata_ranks).to_csv('/cronus_data/avirinchipur/reasoning_for_psych/irt/gpt4_sr_fulldata_ranking.csv', 
-                                        index=False)
-
-
-
-
-
-
+    pd.DataFrame(fulldata_ranks).to_csv('/cronus_data/avirinchipur/reasoning_for_psych/irt/gpt5_sr_fulldata_ranking.csv', index=False)
